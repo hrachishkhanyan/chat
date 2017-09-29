@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+    <!-- <link rel="stylesheet" type="text/css" href="interface.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="interface.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js" type="text/javascript"></script>
+    <style>
+       .hidden {
+         display: none !important;
+       }
+    </style>
+  </head>
+  <body>
+    <div id="dimForm">
+      <div class="ui page dimmer">
+        <div class="ui content">
+          <div class="ui grid">
+            <div id="signupForm" class="hidden signup-form four wide column">
+              <form class="ui form">
+                <label>Sign up</label>
+                <div class="field" style="height: 45px">
+                  <input type="text" id="signupUserName" name="user-name" placeholder="Username">
+                </div>
+                <div class="field" style="height: 45px">
+                  <input type="password" id="signupPassword" name="password" placeholder="Password">
+                </div>
+                <div class="field" style="height: 45px">
+                  <input type="password" id="signupConfirmPassword" name="password" placeholder="Confirm password">
+                </div>
+                <div class="field">
+              </div>
+                <button class="ui blue button" id="signupSubmit" type="button">Sign up</button>
+              </form>
+            </div>
+
+            <div id="loginForm" class="login-form six wide column">
+              <form class="ui form">
+                <label>Login</label>
+                <div class="field ui" >
+                  <input type="text" id="loginUsername" name="user-name" placeholder="Username">
+                </div>
+                <div class="field ui">
+                  <input type="password" id="loginPassword" name="password" placeholder="Password">
+                </div>
+                <div class="field">
+                </div>
+                <button class="ui blue button" id="loginSubmit" type="button">Login</button>
+              </form>
+                        <!-- <input type="text" id="userInput" placeholder="Your username...">
+              <input type="text" id="userInput" placeholder="Your password...">
+
+              <button class="ui blue button" type="button" id="nameButton" name="button">Ok</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="diviv" class="ui fluid container" >
+      <ul style="list-style:none; height:560px; overflow: scroll; overflow-x: hidden" id="messageBoard"></ul>
+    </div>
+    <form id="form">
+      <div class="ui fluid action input">
+        <input type="text" id="input" placeholder="Write your message...">
+        <button class="ui blue button" id="button" type="submit">
+          Send
+        </button>
+      </div>
+    </form>
+
+  </body>
+</html>
