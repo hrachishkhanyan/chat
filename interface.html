@@ -16,9 +16,56 @@
        .hidden {
          display: none !important;
        }
+        a {
+          color: white;
+        }
+       .form p span {
+         color: #2185d0;
+         cursor: pointer;
+       }
+       .sidenav, .sidenavhelper {
+          opacity: 0.9;
+          height: 100%; /* 100% Full-height */
+          width: 0; /* 0 width - change this with JavaScript */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Stay on top */
+          top: 0;
+          left: 0;
+          background-color: #111; /* Black*/
+          overflow-x: hidden; /* Disable horizontal scroll */
+          padding-top: 60px; /* Place content 60px from the top */
+          transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        .icon {
+          color: white;
+        }
+
+        li {
+          margin-top: 20px;
+          margin-left: -15px;
+        }
+
+
     </style>
   </head>
   <body>
+    <div class="sidenavhelper" style="width:0.1%"></div>
+    <div class="sidenav hidden" style="width:15%">
+      <ul style="list-style: none;cursor: pointer;">
+      <li><i class="users icon"></i>
+
+        <a href="#">Join an existing room</a>
+      </li>
+      <li><i class="hand white spock icon"></i>
+        <a href="#">Create a room</a>
+      </li>
+    </ul>
+    </div>
+    <div class="hidden">
+      <input id="" type="text" name="room-name" placeholder="Room name">
+      <input type="password" name="room-password" value="Password">
+    </div>
     <div id="dimForm">
       <div class="ui page dimmer">
         <div class="ui content">
@@ -35,8 +82,9 @@
                 <div class="field" style="height: 45px">
                   <input type="password" id="signupConfirmPassword" name="password" placeholder="Confirm password">
                 </div>
-                <div class="field">
-              </div>
+                <p>
+                  or <span id="openLogin">login</span>
+                </p>
                 <button class="ui blue button" id="signupSubmit" type="button">Sign up</button>
               </form>
             </div>
@@ -52,6 +100,9 @@
                 </div>
                 <div class="field">
                 </div>
+                <p>
+                  or <span id="openSignup">signup</span>
+                </p>
                 <button class="ui blue button" id="loginSubmit" type="button">Login</button>
               </form>
                         <!-- <input type="text" id="userInput" placeholder="Your username...">

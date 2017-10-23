@@ -8,6 +8,10 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var users = [];
+var index = 0;
+// var chatColors = ['#8633FF', '#FFBB33', '#33FFE3', '#8AFF33']
+var chatColors = ['purple', 'red', 'blue', 'yellow'];
+
 app.use(bodyParser.json());
 
 mongoose.connect(process.env.DB_LINK, function(err){
@@ -18,23 +22,29 @@ mongoose.connect(process.env.DB_LINK, function(err){
     res.sendFile(__dirname + '/interface.html');
   });
 
-
   app.get('/interface.js', function(req, res) {
     res.sendFile(__dirname + '/interface.js');
   });
 
-  io.on('connection', function(socket) {
-    io.emit('message', 'Hello from server');
-    socket.on('chat message', function(msg){
-      io.emit('chat message', msg);
-    });
-    socket.emit('login', function() {
+  app.get('/semantic.js', function(req, res) {
+    res.sendFile(__dirname + '/interface.js');
+  });
 
-    })
-    socket.on('new user', function(user) {
-      console.log(user);
-      var newUser = new User(user);
-      users.push(user.name);
+  io.on('connection', function(socket) {
+    socket.emit('message', 'Hello from server');
+    socket.on('chat message', function(msg){
+        io.emit('add message',
+                {
+                  username: socket.username,
+                  message: msg,
+                  color: socket.chatColor
+                }
+              )
+          });
+    socket.on('new user', function(data) {
+      console.log(data);
+      var newUser = new User(data);
+      users.push(data.name);
       newUser.save(err => {
         if(err) {
             console.log('Failed to add user');
@@ -43,17 +53,26 @@ mongoose.connect(process.env.DB_LINK, function(err){
         }
       })
     })
-    socket.on('login attempt', function(data) {
-      User.find().exec(function(err, users) {
+    socket.on('login attempt', function(user) {
+      User.findOne({name: user.name, password: user.password}).exec(function(err, user) {
         if(err) {
           console.log('An error has occured');
-        }
-        for(var i = 0; i < users.length; i++) {
-          console.log(users);
-          if(users[i].name == data.name && users[i].password == data.password) {
-            socket.emit('successful login', data);
-          } else {console.log('No such user');}
-        }
+        } if(!user) {
+          console.log('No such user');
+        } else {
+            users.push(user.name);
+            socket.username = user.name;
+            socket.chatColor = chatColors[index];
+            socket.emit('successful login', {
+                username: socket.username
+              });
+            socket.broadcast.emit('connected user', {
+                username: socket.username
+              });
+              if(index > chatColors.length) index = 0;
+              index++;
+          }
+
       })
     })
   })
